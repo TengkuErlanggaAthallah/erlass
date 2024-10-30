@@ -10,11 +10,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PetugasController;
-use App\Http\Controllers\ChatController;
-
-Route::get('/chat/{userId}', [ChatController::class, 'index'])->middleware('auth')->name('chat.index');
-Route::post('/chat/send', [ChatController::class, 'send'])->middleware('auth')->name('chat.send');
-Route::get('/chat/messages/{userId}', [ChatController::class, 'getMessages'])->middleware('auth');
 
 Route::post('/upload-media', [MediaController::class, 'uploadMedia'])->name('upload.media');
 

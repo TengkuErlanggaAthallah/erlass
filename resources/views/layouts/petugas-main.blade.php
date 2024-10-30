@@ -41,28 +41,6 @@
                     <li class="nav-item"> <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button"> <i class="bi bi-list"></i> </a> </li>
                 </ul> 
                 <ul class="navbar-nav ms-auto"> 
-                        <!--begin::Messages Dropdown Menu-->
-                        <li class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                <i class="nav-icon bi bi-chat"></i>
-                                <span class="d-none d-md-inline">Chat</span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                                <li class="dropdown-header">Chat Users</li>
-                                @foreach($users as $user)
-                                    <li>
-                                        <a href="{{ route('chat.index', ['userId' => $user->id]) }}" class="dropdown-item">
-                                            <div class="d-flex align-items-center">
-                                                <img src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : '/lte/dist/assets/img/user2-160x160.jpg' }}" class="profile-picture rounded-circle" alt="User   Image" style="width: 30px; height: 30px; margin-right: 10px;">
-                                                <span>{{ $user->name }}</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                @endforeach
-                                <li>
-                            </ul>
-                        </li>
-                        <!--end::Messages Dropdown Menu-->
                     <li class="nav-item dropdown user-menu">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <img src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : '/lte/dist/assets/img/user2-160x160.jpg' }}" class="user-image rounded-circle shadow" alt="User  Image">
