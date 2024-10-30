@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alat Promosi Erlass</title>
+    <link rel="shortcut icon" href="/images/erlass.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Candal&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background-color: #f0f8ff;
+            --header-bg-color: rgba(77, 204, 204, 1);
+            --card-bg-color: rgba(179, 229, 252, 0.4);
+            --text-color: #fff;
+            --hover-color: #36a8a8;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--background-color);
+            background-image: url('images/background-home.png'); /* Ganti dengan URL gambar latar belakang Anda */
+            background-size: cover; /* Menutupi seluruh area */
+            background-position: center; /* Memusatkan gambar */
+            background-attachment: fixed; /* Membuat background tidak bergerak saat di-scroll */
+            margin: 0;
+            padding: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+        body.loaded {
+            opacity: 1;
+        }
+
+        .header {
+            width: 475px;
+            height: 90px;
+            background: var(--header-bg-color);
+            border-radius: 45px;
+            border: 1px solid rgba(0, 0, 0, 1);
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            margin: 20px auto 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Candal", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            opacity: 0;
+            transform: translateY(-30px);
+            transition: transform 1s ease, opacity 1s ease;
+            color: var(--text-color);
+            text-shadow: 
+              1px 1px 0 rgba(0, 0, 0, 1),
+              -1px -1px 0 rgba(0, 0, 0, 1),
+              1px -1px 0 rgba(0, 0, 0, 1),
+              -1px 1px 0 rgba(0, 0, 0, 1);
+        }
+
+        .header.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .header h1 {
+            font-size: 40px;
+            margin: 0;
+        }
+
+        .card {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px 0; /* Tambahkan margin atas dan bawah */
+        }
+
+        .media-item {
+            background-color: var(--card-bg-color);
+            border-radius: 10px;
+            width: 300px;
+            margin: 15px; /* Mengubah margin untuk lebih baik */
+            padding: 15px; /* Menambahkan padding */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Bayangan lebih halus */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: transform 0.6s ease-in, opacity 0.6s ease-in;
+        }
+
+        /* Efek saat media-item muncul */
+        .media-item.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .media-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); /* Menambahkan bayangan lebih dalam saat hover */
+        }
+        .media-item img {
+            width: 100%;
+            height: 200px; /* Tetapkan tinggi tetap untuk gambar */
+            object-fit: contain; /* Pastikan gambar tidak terpotong dan tetap dalam rasio aspeknya */
+            cursor: pointer;
+            border: 2px solid #ffffff; /* Garis tepi putih pada gambar */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Bayangan gambar */
+            border-radius: 10px;
+        }
+
+        .media-item .name {
+            font-family: "Bree Serif", serif;
+            font-size: 22px; /* Ukuran font lebih besar */
+            font-weight: bold; /* Membuat nama lebih menonjol */
+            margin: 10px 0 5px; /* Margin atas dan bawah untuk nama */
+            color: #222; /* Warna teks lebih gelap untuk kontras */
+            font-family: "Bree Serif", serif;
+        }
+
+        .media-item .description {
+            font-family: "Bree Serif", serif;
+            font-size: 20px;
+            color: #333; /* Warna teks deskripsi lebih gelap */
+            margin-bottom: 10px; /* Menambahkan jarak bawah untuk deskripsi */
+            font-family: "Bree Serif", serif;
+        }
+
+        .media-footer {
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            margin-top: 10px;
+            height: 25px;
+        }
+
+        .media-footer .date {
+            color: var(--text-color);
+            font-size: 12px; /* Ukuran font untuk tanggal lebih kecil */
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #bbb;
+        }
+
+        /* Modal Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow: auto;
+        }
+
+        .modal-content {
+            display: block;
+            margin: auto;
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        /* Responsiveness */
+        @media only screen and (max-width: 700px) {
+            .modal-content {
+                width: 90%;
+            }
+        }
+
+        .tombol-back {
+            position: fixed; /* Ubah ke fixed agar tetap di satu posisi */
+            top: 20px; /* Sesuaikan posisi */
+            left: 20px;
+            z-index: 100; /* Pastikan berada di atas elemen lain */
+            animation: slideIn 1s ease-in;
+        }
+
+        .tombol-back a {
+            display: inline-block;
+            background-color: #4dcccc;
+            border-radius: 50%;
+            padding: 15px;
+            transition: transform 0.2s ease, background-color 0.3s ease;
+        }
+
+        .tombol-back a:hover {
+            background-color: #36a8a8;
+            transform: scale(1.1);
+        }
+
+        .tombol-back img {
+            width: 75px;
+            height: auto;
+        }
+
+        .media-badge {
+            position: absolute; /* Mengatur posisi badge */
+            top: 10px;
+            left: 10px;
+            background-color: rgba(255, 165, 0, 0.8); /* Warna latar belakang badge */
+            color: rgb(255, 255, 255);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Bayangan badge */
+            transition: transform 0.3s, opacity 0.3s; /* Tambahkan transisi untuk efek halus */
+            opacity: 0; /* Sembunyikan badge secara default */
+            visibility: hidden; /* Sembunyikan badge secara default */
+        }
+
+        .media-item:hover .media-badge {
+            opacity: 1; /* Tampilkan badge saat hover */
+            visibility: visible; /* Tampilkan badge saat hover */
+            transform: scale(1.1); /* Efek zoom saat hover */
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        .search-container input {
+            width: 100%; /* Mengatur lebar penuh untuk .search-input dan lebar penuh untuk input dalam .search-container */
+            max-width: 150px; /* Mengatur lebar maksimum untuk input dalam .search-container */
+            padding: 10px; /* Memberikan ruang di dalam input */
+            border: 2px solid #4dcccc; /* Warna border biru */
+            border-radius: 5px; /* Membuat sudut membulat */
+            font-size: 16px; /* Ukuran font */
+            transition: border-color 0.3s ease; /* Transisi halus untuk perubahan border */
+            justify-content: center; /* Penempatan konten di tengah */
+        }
+
+        .search-container input:focus {
+            outline: none; /* Menghilangkan outline default */
+            border-color: #36a8a8; /* Warna border saat fokus */
+            box-shadow: 0 0 5px rgba(54, 168, 168, 0.5); /* Efek bayangan saat fokus */
+        }
+
+        .search-container input::placeholder {
+            color: #a0a0a0; /* Warna placeholder */
+            opacity: 1; /* Pastikan placeholder terlihat */
+        }
+
+        .search-container {
+            margin: 20px auto;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="tombol-back">
+            <a href="/dashboard-user">
+                <img src="images/back.png" alt="Tombol Back">
+            </a>
+        </div>
+        <div class="header">
+            <h1>Alat Promosi Internal</h1>
+        </div>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterMediaItems()">
+        </div>
+    </header>
+
+    <main>
+        <div class="card">
+            @if(isset($media) && $media->count())
+                @foreach($media as $item)
+                <div class="media-item">
+                    @if($item->is_new) <!-- Periksa apakah item baru -->
+                        <div class="media-badge">New</div> <!-- Badge ditampilkan jika item baru -->
+                    @endif
+                    @if($item->image)
+                        <img src="{{ $item->image }}" alt="Image" onclick="openModal('{{ $item->image }}')">
+                    @endif
+                    <p class="name">{{ $item->title }}</p>
+                    <p class="description">{{ $item->description }}</p>
+                    <div class="media-footer">
+                        <a href="{{ $item->image }}" download>
+                            <img style="width: 24px; height: 24px; border: 0px; box-shadow: 0 0px 0px rgba(0, 0, 0, 0); border-radius: 0px;" src="../gif/download.gif" alt="Download" class="download-gif" id="download-gif">
+                        </a>
+                    </div>
+                </div>
+                @endforeach
+            @else
+                <p>Tidak ada media yang tersedia.</p>
+            @endif
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="imgModal">
+    </div>
+
+    <script>
+        let modalImg = document.getElementById("imgModal");
+        let zoomLevel = 1;
+
+        function filterMediaItems() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            const mediaItems = document.querySelectorAll('.media-item');
+
+            mediaItems.forEach(item => {
+                const title = item.querySelector('.name').textContent.toLowerCase();
+                const description = item.querySelector('.description').textContent.toLowerCase();
+                
+                if (title.includes(filter) || description.includes(filter)) {
+                    item.style.display = ""; // Show item
+                } else {
+                    item.style.display = "none"; // Hide item
+                }
+            });
+        }
+
+        window.addEventListener('load', () => {
+    // Tambahkan kelas 'loaded' setelah halaman selesai dimuat
+        document.body.classList.add('loaded');
+
+        // Tambahkan animasi untuk header
+        const header = document.querySelector('.header');
+        header.classList.add('show');
+
+        // Tambahkan animasi untuk setiap media-item dengan delay
+        const mediaItems = document.querySelectorAll('.media-item');
+        mediaItems.forEach((item, index) => {
+            setTimeout(() => {
+                item.classList.add('show');
+            }, 200 * index); // Memberikan delay animasi di setiap media-item
+        });
+    });
+
+        function openModal(imageSrc) {
+        const modal = document.getElementById("myModal");
+        const modalImg = document.getElementById("imgModal");
+        modal.style.display = "flex";
+        modalImg.src = imageSrc;
+        
+        // Tunggu gambar selesai dimuat
+        modalImg.onload = function() {
+            adjustImageSize(this);
+        }
+    }
+
+    function adjustImageSize(img) {
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
+        const imageRatio = img.naturalWidth / img.naturalHeight;
+        const windowRatio = windowWidth / windowHeight;
+
+        if (imageRatio > windowRatio) {
+            // Image is wider than the window ratio
+            if (img.naturalWidth > windowWidth * 0.9) {
+                img.style.width = '90%';
+                img.style.height = 'auto';
+            } else {
+                img.style.width = 'auto';
+                img.style.height = 'auto';
+            }
+        } else {
+            // Image is taller than the window ratio
+            if (img.naturalHeight > windowHeight * 0.9) {
+                img.style.height = '90vh';
+                img.style.width = 'auto';
+            } else {
+                img.style.width = 'auto';
+                img.style.height = 'auto';
+            }
+        }
+    }
+
+    // Tambahkan event listener untuk resize window
+    window.addEventListener('resize', function() {
+        const modalImg = document.getElementById("imgModal");
+        if (modalImg.src) {
+            adjustImageSize(modalImg);
+        }
+    });
+
+        function closeModal() {
+            const modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        }
+
+        function resetZoomAndPosition() {
+            zoomLevel = 1;
+            modalImg.style.transform = `translate(-50%, -50%) scale(${zoomLevel})`;
+        }
+
+        function zoomImage(event, zoomIn = true) {
+        const modalImg = document.getElementById("imgModal");
+        const factor = zoomIn ? 1.1 : 0.9;
+        
+        const newWidth = modalImg.width * factor;
+        const newHeight = modalImg.height * factor;
+        
+        modalImg.style.width = newWidth + 'px';
+        modalImg.style.height = newHeight + 'px';
+    }
+
+        document.getElementById("myModal").addEventListener('wheel', function(e) {
+        e.preventDefault(); // Prevent page scrolling
+        if (e.deltaY < 0) {
+            zoomImage(e, true); // Zoom in
+        } else {
+            zoomImage(e, false); // Zoom out
+        }
+    });
+    </script>
+</body>
+</html>

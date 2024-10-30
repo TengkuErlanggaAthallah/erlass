@@ -1,0 +1,90 @@
+/* General Styling */
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.hero_area {
+  flex: 1;
+}
+
+/* Header Section */
+.header_section {
+  padding: 20px;
+  background-color: #00964b;
+}
+
+.navbar-brand {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.header-title {
+  color: #00964b;
+  font-size: 1.25rem;
+}
+
+/* Category Section */
+.category_section {
+  padding: 40px 0;
+  background-color: #e8f5e9;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box {
+  display: block;
+  text-align: center;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  transition: transform 0.3s ease;
+}
+
+.box:hover {
+  transform: translateY(-10px);
+}
+
+.img-box img {
+  max-width: 80px;
+  height: auto;
+}
+
+.detail-box h5 {
+  margin-top: 10px;
+  color: #333;
+  font-weight: 600;
+}
+
+/* Footer Section */
+.footer_section {
+  background-color: #00964b;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.footer_section p {
+  color: #ffffff;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .category_section .box {
+    margin-bottom: 20px;
+  }
+
+  .header-title {
+    font-size: 1.15rem;
+  }
+}
