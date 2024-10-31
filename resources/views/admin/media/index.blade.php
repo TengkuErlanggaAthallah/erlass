@@ -24,14 +24,31 @@
 
     <div class="app-content"> 
         <div class="container-fluid">
+            <div class="mb-3">
+                <label for="searchInput" class="form-label">Cari Media</label>
+                <input type="text" id="searchInput" class="form-control" onkeyup="searchMedia()" placeholder="Cari berdasarkan judul atau deskripsi">
+            </div>
+            <div class="mb-3">
+                <label for="categoryFilter" class="form-label">Filter Kategori</label>
+                <select id="categoryFilter" class="form-select" onchange="filterByCategory()">
+                    <option value="">Semua Kategori</option>
+                    <option value="motivational_quotes">Kutipan Motivasi</option>
+                    <option value="alat_promosi_internal">Alat Promosi Internal</option>
+                    <option value="design_corner">Design Corner</option>
+                    <option value="promotion_videos">Video Promosi</option>
+                    <option value="produk">Produk</option>
+                </select>
+            </div>
+    
             @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
+    
             @foreach (['motivational_quotes', 'alat_promosi_internal', 'design_corner', 'promotion_videos', 'produk'] as $category)
-                <div class="card mb-4">
+                <div class="card mb-4 category-card" data-category="{{ $category }}">
                     <div class="card-header">
                         <h3 class="card-title">{{ ucfirst(str_replace('_', ' ', $category)) }}</h3>
                     </div>
@@ -46,8 +63,8 @@
                                         <th>Quotes</th>
                                         <th>Tanggal Upload</th>
                                     @elseif ($category === 'alat_promosi_internal')
-                                        <th>Deskripsi</th>
                                         <th>Judul</th>
+                                        <th>Deskripsi</th>
                                         <th>Gambar</th>
                                         <th>Tanggal Upload</th>
                                     @elseif ($category === 'design_corner')
@@ -64,13 +81,13 @@
                                         <th>Deskripsi</th>
                                         <th>Gambar</th>
                                         <th>Tanggal Upload</th>
-                                        @endif
-                                        <th>Aksi</th>
+                                    @endif
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($media->where('category', $category) as $item)
-                                <tr>
+                                <tr data-title="{{ strtolower($item->title) }}" data-description="{{ strtolower($item->description) }}" data-quote="{{ strtolower($item->category === 'motivational_quotes' ? $item->description : '') }}">
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ ucfirst(str_replace('_', ' ', $item->category)) }}</td>
                                     @if ($item->category === 'motivational_quotes')
@@ -82,8 +99,8 @@
                                     <td>{{ Str::limit($item->description, 50) }}</td>
                                     <td>{{ $item->upload_date }}</td>
                                     @elseif ($item->category === 'alat_promosi_internal')
+                                    <td>{{ $item->title }}</td>
                                     <td>{{ Str::limit($item->description, 50) }}</td>
-                                        <td>{{ $item->title }}</td>
                                         <td>
                                             @if ($item->image)
                                                 <img src="{{ $item->image }}" alt="Gambar Media" style="width: 100px; height: 100px;">
@@ -107,16 +124,16 @@
                                                 <img src="{{ $item->thumbnail }}" alt="Gambar Thumbnail" style="width: 100px; height: 100px;">
                                             @endif
                                         </td>
-                                    @elseif ($item->category === 'produk')  <!-- Pastikan ini sesuai -->
-                                    <td>{{ $item->title }}</td>
-                                    <td>{{ Str::limit($item->description, 50) }}</td> <!-- Deskripsi dipersingkat -->
-                                    <td>
-                                        @if ($item->image)
-                                            <img src="{{ $item->image }}" alt="Gambar Media" style="width: 100px; height: 100px;">
-                                        @endif
+                                    @elseif ($item->category === 'produk')
+                                        <td>{{ $item->title }}</td>
+                                        <td>{{ Str::limit($item->description, 50) }}</td>
+                                        <td>
+                                            @if ($item->image)
+                                                <img src="{{ $item->image }}" alt="Gambar Media" style="width: 100px; height: 100px;">
+                                            @endif
+                                        </td>
                                         <td>{{ $item->upload_date }}</td>
-                                    </td>
-                                @endif
+                                    @endif
                                     <td>
                                         <button type="button" class="btn btn-sm btn-primary" onclick="openEditModal({{ $item->id }}, '{{ $item->category }}')">Edit</button>
                                         <button type="button" class="btn btn-sm btn-danger" onclick="openDeleteModal({{ $item->id }})">Hapus</button>
@@ -128,8 +145,8 @@
                     </div>
                 </div>
             @endforeach
-        </div> 
-    </div> 
+        </div>
+    </div>
 </main>
 
 <!-- Modal Edit -->
@@ -179,6 +196,34 @@
 </div>
 
 <script>
+function searchMedia() {
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const rows = document.querySelectorAll('tbody tr');
+
+    rows.forEach(row => {
+        const title = row.dataset.title; // Mengambil data judul
+        const description = row.dataset.description; // Mengambil data deskripsi
+
+        if (title.includes(input) || description.includes(input)) {
+            row.style.display = ''; // Tampilkan baris jika cocok
+        } else {
+            row.style.display = 'none'; // Sembunyikan baris jika tidak cocok
+        }
+    });
+}
+    function filterByCategory() {
+    const categoryFilter = document.getElementById('categoryFilter');
+    const selectedCategory = categoryFilter.value;
+    const categoryCards = document.querySelectorAll('.category-card');
+
+    categoryCards.forEach(card => {
+        if (selectedCategory === '' || card.dataset.category === selectedCategory) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
 function openEditModal(id, category) {
     const form = document.getElementById('editForm');
     form.action = `/admin/media/${id}`; // Update action URL
@@ -205,12 +250,12 @@ function openEditModal(id, category) {
     } else if (category === 'alat_promosi_internal') {
         formContent = `
             <div class="form-group">
-                <label for="description">Deskripsi</label>
-                <textarea name="description" class="form-control mb-2" rows="3"></textarea>
-            </div>
-            <div class="form-group">
                 <label for="title">Judul</label>
                 <input type="text " name="title" class="form-control mb-2" placeholder="Judul">
+            </div>
+            <div class="form-group">
+                <label for="description">Deskripsi</label>
+                <textarea name="description" class="form-control mb-2" rows="3"></textarea>
             </div>
             <div class="form-group">
                 <label for="image">Upload Gambar</label>

@@ -78,7 +78,8 @@
             formContent = `
                 <div class="form-group">
                     <label for="image">Upload Gambar</label>
-                    <input type="file" name="image" class="form-control" accept="image/*" required>
+                    <input type="file" name="image" class="form-control" accept="image/*" required onchange="previewImage(event)">
+                    <img id="imagePreview" src="#" alt="Pratinjau Gambar" style="display:none; width: 200px; margin-top: 10px;"/>
                 </div>
                 <div class="form-group">
                     <label for="quote">Quotes</label>
@@ -99,9 +100,10 @@
                     <label for="title">Judul</label>
                     <input type="text" name="title" class="form-control" required>
                 </div>
-                <div class="form-group">
+                <div class="form-group ">
                     <label for="image">Upload Gambar</label>
-                    <input type="file" name="image" class="form-control" accept="image/*" required>
+                    <input type="file" name="image" class="form-control" accept="image/*" required onchange="previewImage(event)">
+                    <img id="imagePreview" src="#" alt="Pratinjau Gambar" style="display:none; width: 200px; margin-top: 10px;"/>
                 </div>
                 <div class="form-group">
                     <label for="upload_date">Tanggal Upload</label>
@@ -124,7 +126,8 @@
                 </div>
                 <div class="form-group">
                     <label for="image">Upload Gambar</label>
-                    <input type="file" name="image" class="form-control" accept="image/*" required>
+                    <input type="file" name="image" class="form-control" accept="image/*" required onchange="previewImage(event)">
+                    <img id="imagePreview" src="#" alt="Pratinjau Gambar" style="display:none; width: 200px; margin-top: 10px;"/>
                 </div>
             `;
         } else if (category === 'promotion_videos') {
@@ -139,11 +142,16 @@
                 </div>
                 <div class="form-group">
                     <label for="thumbnail">Upload Thumbnail</label>
-                    <input type="file" name="thumbnail" class="form-control" accept="image/*" required>
+                    <input type="file" name="thumbnail" class="form-control" accept="image/*" required onchange="previewImage(event)">
+                    <img id="imagePreview" src="#" alt="Pratinjau Gambar" style="display:none; width: 200px; margin-top: 10px;"/>
                 </div>
                 <div class="form-group">
                     <label for="media">Upload Video</label>
-                    <input type="file" name="media" class="form-control" accept="video/*" required>
+                    <input type="file" name="media" class="form-control" accept="video/*" required onchange="previewVideo(event)">
+                    <video id="videoPreview" controls style="display:none; width: 200px; margin-top: 10px;">
+                        <source id="videoSource" src="#" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
             `;
         } else if (category === 'produk') {
@@ -154,7 +162,8 @@
                 </div>
                 <div class="form-group">
                     <label for="image">Upload Gambar Produk</label>
-                    <input type="file" name="image" class="form-control" accept="image/*" required>
+                    <input type="file" name="image" class="form-control" accept="image/*" required onchange="previewImage(event)">
+                    <img id="imagePreview" src="#" alt="Pratinjau Gambar" style="display:none; width: 200px; margin-top: 10px;"/>
                 </div>
                 <div class="form-group">
                     <label for="upload_date">Tanggal Upload</label>
@@ -168,6 +177,40 @@
         }
 
         document.getElementById('form-content').innerHTML = formContent;
+    }
+
+    function previewImage(event) {
+        const imagePreview = document.getElementById('imagePreview');
+        const file = event.target.files[0];
+        
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block '; // Tampilkan pratinjau gambar
+            }
+            reader.readAsDataURL(file);
+        } else {
+            imagePreview.style.display = 'none'; // Sembunyikan pratinjau jika tidak ada file
+        }
+    }
+
+    function previewVideo(event) {
+        const videoPreview = document.getElementById('videoPreview');
+        const videoSource = document.getElementById('videoSource');
+        const file = event.target.files[0];
+        
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                videoSource.src = e.target.result;
+                videoPreview.style.display = 'block'; // Tampilkan pratinjau video
+                videoPreview.load(); // Muat video baru
+            }
+            reader.readAsDataURL(file);
+        } else {
+            videoPreview.style.display = 'none'; // Sembunyikan pratinjau jika tidak ada file
+        }
     }
 </script>
 @endsection
