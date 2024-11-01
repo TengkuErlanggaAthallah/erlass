@@ -33,32 +33,32 @@
             }
         }
         .header {
-            color:white; 
-            width: 475px;
-            height: 90px;
+            color: white; 
+            width: 90%; /* Menggunakan lebar responsif */
+            max-width: 600px; /* Lebar maksimum untuk header */
+            height: auto; /* Biarkan tinggi otomatis */
             background: #4db6ac;
-            opacity: 1;
             border: 1px solid rgba(0, 0, 0, 1);
             border-radius: 45px;
             text-align: center;
             padding: 20px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            font-family: "Candal", sans-serif;
+            font-weight: 400;
+            font-style: normal;
             font-size: 2rem;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 0 auto 30px auto;
-            font-family: "Candal", sans-serif;
-            font-weight: 400;
-            font-style: normal;
+            margin: 20px auto; /* Margin otomatis untuk center */
             animation: slideInDown 0.8s ease-out;
             text-shadow: 
-              1px 1px 0 rgba(0, 0, 0, 1),
-              -1px -1px 0 rgba(0, 0, 0, 1),
-              1px -1px 0 rgba(0, 0, 0, 1),
-              -1px 1px 0 rgba(0, 0, 0, 1),
-              0 1px 0 rgba(0, 0, 0, 1),
-              0 -1px 0 rgba(0, 0, 0, 1);
+            1px 1px 0 rgba(0, 0, 0, 1),
+            -1px -1px 0 rgba(0, 0, 0, 1),
+            1px -1px 0 rgba(0, 0, 0, 1),
+            -1px 1px 0 rgba(0, 0, 0, 1),
+            0 1px 0 rgba(0, 0, 0, 1),
+            0 -1px 0 rgba(0, 0, 0, 1);
         }
         .header h1 {
             margin: 0;
@@ -163,11 +163,11 @@
         }
     }
 
-        .tombol-back {
-            position: fixed; /* Ubah ke fixed agar tetap di satu posisi */
-            top: 20px; /* Sesuaikan posisi */
-            left: 20px;
-            z-index: 1; /* Pastikan berada di atas elemen lain */
+    .tombol-back {
+            position: absolute; /* Ubah ke fixed agar tetap di satu posisi */
+            top: 20px; /* Sesuaikan posisi atas */
+            left: 20px; /* Sesuaikan posisi kiri */
+            z-index: 100; /* Pastikan berada di atas elemen lain */
             animation: slideIn 1s ease-in;
         }
 
@@ -175,7 +175,7 @@
             display: inline-block;
             background-color: #4dcccc;
             border-radius: 50%;
-            padding: 15px;
+            padding: 10px; /* Mengurangi padding untuk responsivitas */
             transition: transform 0.2s ease, background-color 0.3s ease;
         }
 
@@ -185,8 +185,8 @@
         }
 
         .tombol-back img {
-            width: 75px;
-            height: auto;
+            width: 50px; /* Menyesuaikan ukuran tombol back */
+            height: auto; /* Biarkan tinggi otomatis */
         }
 
         .toast {
@@ -200,10 +200,31 @@
             opacity: 0;
             transition: opacity 0.5s, bottom 0.5s;
             z-index: 1000;
+            max-width: 90%; /* Batasi lebar maksimum toast */
+            text-align: center; /* Center text */
         }
+
         .toast.show {
             opacity: 1;
             bottom: 40px;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 600px) {
+            .header {
+                font-size: 1.5rem; /* Ukuran font lebih kecil di layar kecil */
+                padding: 15px; /* Mengurangi padding untuk layar kecil */
+            }
+
+            .toast {
+                bottom: 10px; /* Mengurangi jarak dari bawah */
+                right: 10px; /* Mengurangi jarak dari kanan */
+                padding: 8px 16px; /* Mengurangi padding */
+                font-size: 14px; /* Ukuran font lebih kecil di layar kecil */
+            }
+            .tombol-back img {
+                width: 40px; /* Ukuran lebih kecil untuk tombol back di layar kecil */
+            }
         }
         .close {
             position: absolute;

@@ -51,32 +51,6 @@
             }
         }
 
-        /* Header Styling */
-        .header {
-            width: 475px;
-            height: 90px;
-            background: var(--header-bg-color);
-            border-radius: 45px;
-            border: 1px solid rgba(0, 0, 0, 1);
-            text-align: center;
-            padding: 20px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            margin: 20px auto 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: "Candal", sans-serif;
-            font-weight: 400;
-            font-style: normal;
-            animation: slideInDown 0.8s ease-out;
-            color: var(--text-color);
-            text-shadow: 
-              1px 1px 0 rgba(0, 0, 0, 1),
-              -1px -1px 0 rgba(0, 0, 0, 1),
-              1px -1px 0 rgba(0, 0, 0, 1),
-              -1px 1px 0 rgba(0, 0, 0, 1);
-        }
-
                 @keyframes slideInDown {
             0% {
                 transform: translateY(-50px);
@@ -158,11 +132,40 @@
         }
 
         /* Back Button Styling */
+        .header {
+            color: white; 
+            width: 90%; /* Menggunakan lebar responsif */
+            max-width: 600px; /* Lebar maksimum untuk header */
+            height: auto; /* Biarkan tinggi otomatis */
+            background: #4db6ac;
+            border: 1px solid rgba(0, 0, 0, 1);
+            border-radius: 45px;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            font-family: "Candal", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto; /* Margin otomatis untuk center */
+            animation: slideInDown 0.8s ease-out;
+            text-shadow: 
+            1px 1px 0 rgba(0, 0, 0, 1),
+            -1px -1px 0 rgba(0, 0, 0, 1),
+            1px -1px 0 rgba(0, 0, 0, 1),
+            -1px 1px 0 rgba(0, 0, 0, 1),
+            0 1px 0 rgba(0, 0, 0, 1),
+            0 -1px 0 rgba(0, 0, 0, 1);
+        }
+
         .tombol-back {
-            position: fixed; /* Ubah ke fixed agar tetap di satu posisi */
-            top: 20px; /* Sesuaikan posisi */
-            left: 20px;
-            z-index: 1; /* Pastikan berada di atas elemen lain */
+            position: absolute; /* Ubah ke fixed agar tetap di satu posisi */
+            top: 20px; /* Sesuaikan posisi atas */
+            left: 20px; /* Sesuaikan posisi kiri */
+            z-index: 100; /* Pastikan berada di atas elemen lain */
             animation: slideIn 1s ease-in;
         }
 
@@ -170,7 +173,7 @@
             display: inline-block;
             background-color: #4dcccc;
             border-radius: 50%;
-            padding: 15px;
+            padding: 10px; /* Mengurangi padding untuk responsivitas */
             transition: transform 0.2s ease, background-color 0.3s ease;
         }
 
@@ -180,8 +183,20 @@
         }
 
         .tombol-back img {
-            width: 75px;
-            height: auto;
+            width: 50px; /* Menyesuaikan ukuran tombol back */
+            height: auto; /* Biarkan tinggi otomatis */
+        }
+
+        /* Responsiveness */
+        @media only screen and (max-width: 600px) {
+            .header {
+                font-size: 1.5rem; /* Ukuran font lebih kecil di layar kecil */
+                padding: 15px; /* Mengurangi padding untuk layar kecil */
+            }
+
+            .tombol-back img {
+                width: 40px; /* Ukuran lebih kecil untuk tombol back di layar kecil */
+            }
         }
 
         /* Modal Styling (if used) */
@@ -236,26 +251,31 @@
             transform: scale(1.1);
         }
         
-        .search-input {
-            width: 10%; /* Mengatur lebar penuh */
+        .search-container input {
+            width: 100%; /* Mengatur lebar penuh untuk .search-input dan lebar penuh untuk input dalam .search-container */
+            max-width: 150px; /* Mengatur lebar maksimum untuk input dalam .search-container */
             padding: 10px; /* Memberikan ruang di dalam input */
             border: 2px solid #4dcccc; /* Warna border biru */
             border-radius: 5px; /* Membuat sudut membulat */
             font-size: 16px; /* Ukuran font */
             transition: border-color 0.3s ease; /* Transisi halus untuk perubahan border */
-            justify-content: center;
-            position: absolute;
+            justify-content: center; /* Penempatan konten di tengah */
         }
 
-        .search-input:focus {
+        .search-container input:focus {
             outline: none; /* Menghilangkan outline default */
             border-color: #36a8a8; /* Warna border saat fokus */
             box-shadow: 0 0 5px rgba(54, 168, 168, 0.5); /* Efek bayangan saat fokus */
         }
 
-        .search-input::placeholder {
+        .search-container input::placeholder {
             color: #a0a0a0; /* Warna placeholder */
             opacity: 1; /* Pastikan placeholder terlihat */
+        }
+
+        .search-container {
+            margin: 20px auto;
+            text-align: center;
         }
     </style>
 </head>
@@ -269,6 +289,9 @@
         <div class="header">
             <h1>Promosi Video</h1>
         </div>
+        <div class="search-container">
+            <input type="text" id="videoSearch" class="search-input" placeholder="Cari video...">
+        </div>
     </header>
 
     <main>
@@ -278,8 +301,6 @@
                     {{ session('success') }}
                 </div>
             @endif
-    
-            <input type="text" id="videoSearch" class="search-input" placeholder="Cari video..." />
     
             <div class="video-container media-container">
                 @foreach($media as $item)

@@ -17,22 +17,21 @@
         /* Font Awesome CSS */
         @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
 
-        
         /* Custom Styles */
         body {
             font-family: "Poppins", sans-serif;
-            background-image: url('/images/background-home.png'); /* Ganti dengan URL gambar latar belakang Anda */
-            background-size: cover; /* Menutupi seluruh area */
-            background-position: center; /* Memusatkan gambar */
+            background-image: url('/images/background-home.png');
+            background-size: cover;
+            background-position: center;
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
-        
-                /* Animasi untuk elemen yang muncul */
-                @keyframes fadeIn {
+
+        /* Animasi untuk elemen yang muncul */
+        @keyframes fadeIn {
             0% {
                 opacity: 0;
                 transform: translateY(-20px);
@@ -57,60 +56,63 @@
             padding: 20px;
             text-align: center;
             margin-bottom: 10px;
-            position: relative; /* Tambahkan ini untuk mengatur posisi logo */
+            position: relative;
         }
 
-        /* Mengatur posisi gambar ke kanan atas */
         .logo-box {
-            position: relative; /* Membuat kontainer sebagai acuan posisi untuk elemen absolut */
-            height: auto; /* Sesuaikan tinggi sesuai konten */
+            position: relative;
+            height: auto;
             margin-top: 50px;
             animation: slideInDown 0.8s ease-out;
         }
 
         #left-image {
             position: absolute;
-            left: 0; /* Menempatkan gambar di kiri */
-            top: 50%; /* Menempatkan gambar di tengah secara vertikal */
-            transform: translateY(-50%); /* Mengatur gambar benar-benar di tengah */
+            left: 0; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            max-width: 20vw; /* Ukuran awal lebih kecil untuk gambar kiri */
+            width: 140px; /* Ukuran tetap awal untuk gambar kiri */
         }
 
         #right-image {
             position: absolute;
-            right: 0; /* Menempatkan gambar di kanan */
-            top: 50%; /* Menempatkan gambar di tengah secara vertikal */
-            transform: translateY(-50%); /* Mengatur gambar benar-benar di tengah */
+            right: 0; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            max-width: 30vw; /* Ukuran awal lebih kecil untuk gambar kanan */
+            width: 210px; /* Ukuran tetap awal untuk gambar kanan */
         }
 
         .logo-box img {
             height: auto;
+            display: block;
         }
 
         .hero_area h1 {
-            color: #6ba0d1; /* Warna teks */
-            position: relative; /* Ubah posisi menjadi relatif */
+            color: #6ba0d1;
+            position: relative;
             text-shadow: 
-              1px 1px 0 rgb(255, 255, 255), /* Bayangan kanan bawah */
-              -1px -1px 0 rgb(248, 248, 248), /* Bayangan kiri atas */
-              1px -1px 0 rgb(251, 250, 250), /* Bayangan kanan atas */
-              -1px 1px 0 rgb(246, 246, 246), /* Bayangan kiri bawah */
-              0 1px 0 rgb(247, 247, 247), /* Bayangan bawah */
-              0 -1px 0 rgb(255, 255, 255); /* Bayangan atas */
+            1px 1px 0 rgb(255, 255, 255),
+            -1px -1px 0 rgb(248, 248, 248),
+            1px -1px 0 rgb(251, 250, 250),
+            -1px 1px 0 rgb(246, 246, 246),
+            0 1px 0 rgb(247, 247, 247),
+            0 -1px 0 rgb(255, 255, 255);
             font-family: "Candal", sans-serif;
             font-weight: bold;
-            font-style: normal;
             font-size: 64px;
             opacity: 1;
+            margin-top: 100px; /* Tambahkan jarak antara logo dan judul */
         }
 
         .hero_area h3 {
-            color: #e06324; /* Warna teks */
-            position: relative; /* Ubah posisi menjadi relatif */
+            color: #e06324;
             font-family: "Candal", sans-serif;
             font-weight: bold;
-            font-style: normal;
             font-size: 25px;
             opacity: 1;
+            margin-top: 10px; /* Tambahkan jarak antara judul dan subjudul */
         }
 
         .hero_area h1,h3 {
@@ -137,7 +139,7 @@
                 opacity: 1;
             }
             100% {
-                transform: translateX(0) scale(1);
+                transform: translateX( 0) scale(1);
                 opacity: 1;
             }
         }
@@ -149,27 +151,27 @@
             background-color: rgba(38,169,239,0.4699999988079071);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             border-radius: 20px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Tambahkan transisi pada box-shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             margin: 10px;
             margin-top: 50px;
-            animation: slideInBounce 0.6s ease forwards; /* Apply the new animation */
-            opacity: 0; /* Start with opacity 0 */
+            animation: slideInBounce 0.6s ease forwards;
+            opacity: 0;
         }
 
         .box:hover {
-            transform: translateY(-10px) scale(1.05); /* Tambahkan efek pembesaran saat hover */
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Tambahkan bayangan lebih gelap saat hover */
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
 
         .img-box {
-            background-color: rgba(38,169,239,0.4699999988079071); /* Ganti latar belakang img-box */
+            background-color: rgba(38,169,239,0.4699999988079071);
             border-radius: 20px;
             padding: 10px;
-            transition: transform 0.3s ease; /* Transisi untuk gambar */
+            transition: transform 0.3s ease;
         }
 
         .img-box:hover {
-            transform: scale(1.1); /* Tambahkan efek zoom saat hover */
+            transform: scale(1.1);
         }
 
         .img-box img {
@@ -177,19 +179,13 @@
             height: auto;
         }
 
-        /* Mengatur GIF dan gambar statis agar memiliki ukuran dan posisi yang sama */
-        .logo-box img {
-            height: 100px; /* Tinggi maksimum untuk gambar */
-            display: block; /* Menjaga agar gambar terlihat sebagai block */
-        }
-
         .gif-box {
             border-radius: 20px;
             padding: 10px;
             text-align: left;
             display: flex;
-            justify-content: space-between; /* Pindahkan gambar statis ke sebelah kanan */
-            align-items: center; /* Rata tengah secara vertikal */
+            justify-content: space-between;
+            align-items: center;
         }
 
         .gif-box img {
@@ -201,11 +197,11 @@
             margin-top: 10px;
             color: #333;
             font-weight: 600;
-            transition: color 0.3s ease; /* Transisi untuk warna teks */
+            transition: color 0.3s ease;
         }
 
         .box:hover .detail-box h5 {
-            color: rgba(255, 255, 255, 0.8); /* Ubah warna teks saat hover */
+            color: rgba(255, 255, 255, 0.8);
         }
 
         /* Responsive Adjustments */
@@ -222,11 +218,25 @@
                 margin-bottom: 20px;
             }
 
-            .logo-box img {
-                max-width: 50px; /* Mengatur ukuran gambar lebih kecil pada perangkat kecil */
-                height: auto;
+            #left-image {
+                max-width: 20vw;
+            }
+
+            #right-image {
+                max-width: 25vw;
             }
         }
+
+        @media (max-width: 480px) {
+            #left-image {
+                max-width: 16vw;
+            }
+
+            #right-image {
+                max-width: 20vw;
+            }
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -237,20 +247,21 @@
                 transform: translateY(0);
             }
         }
+
         .copyright p {
-            font-size: 24px; /* Ukuran font default */
+            font-size: 24px;
         }
 
         /* Responsive Adjustments */
         @media (max-width: 768px) {
             .copyright p {
-                font-size: 18px; /* Ukuran font lebih kecil untuk perangkat kecil */
+                font-size: 18px;
             }
         }
 
         @media (max-width: 480px) {
             .copyright p {
-                font-size: 16px; /* Ukuran font lebih kecil lagi untuk perangkat sangat kecil */
+                font-size: 16px;
             }
         }
     </style>
@@ -258,9 +269,9 @@
 <body>
     <div class="hero_area">
         <div class="logo-box">
-            <img style="width: 210px; height: 100px;" id="right-image" src="images/coding.png" alt="Logo kanan" />
-            <img style="width: 130px; height: 130px; margin-top: 5px;"id="left-image" src="images/erlass.png" alt="Logo Kiri" />
-        </div>        
+            <img id="right-image" src="images/coding.png" alt="Logo kanan" />
+            <img id="left-image" src="images/erlass.png" alt="Logo Kiri" />
+        </div>
         <h1>Alat Promosi Erlass 2024</h1>
         <h3>Marketing Komunikasi Nasional Erlass Prokreatif Indonesia 2024</h3>
 
@@ -284,7 +295,7 @@
 
                     <!-- Alat Promosi Internal -->
                     <div class="col-sm-6 col-md-4 col-xl-2 mb-4">
-                        <a href="{{ route('alat.promosi') }}"style="text-decoration: none;">
+                        <a href="{{ route('alat.promosi') }}"style="text-decoration: none ;">
                             <label class="box rounded">
                                 <div class="img-box">
                                     <img src="gif/promosi.gif" alt="Alat Promosi Internal" />
@@ -341,36 +352,11 @@
         </section>
     </div>
     <div style="text-align: center; margin-top: 300px; font-family: Candal, sans-serif; font-weight: regular; opacity: 1; color: white; animation: fadeIn 0.8s ease-in-out;" class="copyright">
-        <p>© 2024 All Rights Reserved By Erlass Prokreatif Indonesia</p>
-    </div>    
+        <p> 2024 All Rights Reserved By Erlass Prokreatif Indonesia</p>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
-
-
-    <script>
-        // Mengatur tampilan gambar GIF dan gambar statis
-        const animatedGif = document.getElementById("animated-gif");
-        const staticImage = document.getElementById("static-image");
-
-        // Menunggu 3 detik, lalu menyembunyikan GIF dan menampilkan gambar statis
-        setTimeout(() => {
-            animatedGif.style.display = "none";
-            staticImage.style.display = "block";
-        }, 1000);
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const boxes = document.querySelectorAll('.box');
-            boxes.forEach((box, index) => {
-                setTimeout(() => {
-                    box.style.animationDelay = `${index * 0.2}s`; // Delay for each box
-                    box.style.opacity = 1; // Set opacity to 1 to make it visible
-                }, 100); // Start after 100ms
-            });
-        });
-    </script>
 </body>
 </html>
