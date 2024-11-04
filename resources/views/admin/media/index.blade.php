@@ -1,7 +1,12 @@
 @extends('layouts.main')
 
 @section('title', 'Daftar Media')
-
+<style>
+    .date-range-label {
+        margin: 0 10px; /* Menambahkan jarak */
+        font-weight: bold; /* Membuat teks lebih tebal */
+    }
+</style>
 @section('content')
 <main class="app-main"> 
     <div class="app-content-header"> 
@@ -39,6 +44,16 @@
                     <option value="produk">Produk</option>
                 </select>
             </div>
+            <div class="mb-3">
+                <label for="dateRange" class="form-label">Filter Berdasarkan Tanggal</label>
+                <div class="input-group">
+                    <input type="date" id="startDate" class="form-control" onchange="filterByDate()">
+                    <div class="input-group-append">
+                        <span class="input-group-text">ke</span>
+                    </div>
+                    <input type="date" id="endDate" class="form-control" onchange="filterByDate()">
+                </div>
+            </div>
     
             @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -70,12 +85,12 @@
                                     @elseif ($category === 'design_corner')
                                         <th>Nama Desainer</th>
                                         <th>Deskripsi</th>
-                                        <th>Tanggal Desain</th>
+                                        <th>Tanggal Upload</th>
                                         <th>Gambar</th>
                                     @elseif ($category === 'promotion_videos')
                                         <th>Judul</th>
-                                        <th>Tanggal Upload</th>
                                         <th>Thumbnail</th>
+                                        <th>Tanggal Upload</th>
                                     @elseif ($category === 'produk')
                                         <th>Judul</th>
                                         <th>Deskripsi</th>
@@ -87,7 +102,10 @@
                             </thead>
                             <tbody>
                                 @foreach ($media->where('category', $category) as $item)
-                                <tr data-title="{{ strtolower($item->title) }}" data-description="{{ strtolower($item->description) }}" data-quote="{{ strtolower($item->category === 'motivational_quotes' ? $item->description : '') }}">
+                                <tr data-title="{{ strtolower($item->title) }}" 
+                                    data-description="{{ strtolower($item->description) }}" 
+                                    data-quote="{{ strtolower($item->category === 'motivational_quotes' ? $item->description : '') }}" 
+                                    data-upload-date="{{ $item->upload_date }}">
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ ucfirst(str_replace('_', ' ', $item->category)) }}</td>
                                     @if ($item->category === 'motivational_quotes')
@@ -110,7 +128,7 @@
                                     @elseif ($item->category === 'design_corner')
                                         <td>{{ $item->designer_name }}</td>
                                         <td>{{ Str::limit($item->description, 50) }}</td>
-                                        <td>{{ $item->design_date }}</td>
+                                        <td>{{ $item->upload_date }}</td>
                                         <td>
                                             @if ($item->image)
                                                 <img src="{{ $item->image }}" alt="Gambar Media" style="width: 100px; height: 100px;">
@@ -118,12 +136,12 @@
                                         </td>
                                     @elseif ($item->category === 'promotion_videos')
                                         <td>{{ $item->video_title }}</td>
-                                        <td>{{ $item->video_date }}</td>
                                         <td>
                                             @if ($item->thumbnail)
                                                 <img src="{{ $item->thumbnail }}" alt="Gambar Thumbnail" style="width: 100px; height: 100px;">
                                             @endif
                                         </td>
+                                        <td>{{ $item->upload_date }}</td>
                                     @elseif ($item->category === 'produk')
                                         <td>{{ $item->title }}</td>
                                         <td>{{ Str::limit($item->description, 50) }}</td>
@@ -196,6 +214,22 @@
 </div>
 
 <script>
+    function filterByDate() {
+    const startDate = new Date(document.getElementById('startDate').value);
+    const endDate = new Date(document.getElementById('endDate').value);
+    const rows = document.querySelectorAll('tbody tr');
+
+    rows.forEach(row => {
+        const uploadDate = new Date(row.querySelector('td:nth-last-child(2)').innerText); // Ambil tanggal upload dari kolom yang sesuai
+
+        // Cek apakah uploadDate berada dalam rentang tanggal yang dipilih
+        if ((isNaN(startDate) || uploadDate >= startDate) && (isNaN(endDate) || uploadDate <= endDate)) {
+            row.style.display = ''; // Tampilkan baris jika cocok
+        } else {
+            row.style.display = 'none'; // Sembunyikan baris jika tidak cocok
+        }
+    });
+}
 function searchMedia() {
     const input = document.getElementById('searchInput').value.toLowerCase();
     const rows = document.querySelectorAll('tbody tr');
@@ -277,8 +311,8 @@ function openEditModal(id, category) {
                 <textarea name="description" class="form-control mb-2" rows="3"></textarea>
             </div>
             <div class="form-group">
-                <label for="design_date">Tanggal Desain</label>
-                <input type="date" name="design_date" class="form-control mb-2">
+                <label for="upload_date">Tanggal Desain</label>
+                <input type="date" name="upload_date" class="form-control mb-2">
             </div>
             <div class="form-group">
                 <label for="image">Upload Gambar</label>
@@ -292,8 +326,8 @@ function openEditModal(id, category) {
                 <input type="text" name="video_title" class="form-control mb-2" placeholder="Judul Video">
             </div>
             <div class="form-group">
-                <label for="video_date">Tanggal Video</label>
-                <input type="date" name="video_date" class="form-control mb-2">
+                <label for="upload_date">Tanggal Video</label>
+                <input type="date" name="upload_date" class="form-control mb-2">
             </div>
             <div class="form-group">
                 <label for="thumbnail">Thumbnail</label>

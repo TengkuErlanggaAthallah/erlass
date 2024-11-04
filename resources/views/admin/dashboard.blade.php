@@ -96,9 +96,7 @@
                                             <th>Tanggal Unggah</th>
                                             <th>Deskripsi</th>
                                             <th>Nama Desainer</th>
-                                            <th>Tanggal Desain</th>
                                             <th>Judul Video</th>
-                                            <th>Tanggal Video</th>
                                             <th>Kutipan</th>
                                             <th>Nama Pengguna</th>
                                         </tr>
@@ -111,9 +109,7 @@
                                             <td>{{ $media->upload_date }}</td>
                                             <td>{{ Str::limit($media->description, 50) }}</td> <!-- Deskripsi dipersingkat -->
                                             <td>{{ $media->designer_name }}</td>
-                                            <td>{{ $media->design_date }}</td>
                                             <td>{{ $media->video_title }}</td>
-                                            <td>{{ $media->video_date }}</td>
                                             <td>{{ $media->quote }}</td>
                                             <td>{{ $media->user->name }}</td>
                                         </tr>

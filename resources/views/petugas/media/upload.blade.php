@@ -121,8 +121,8 @@
                     <textarea name="description" class="form-control" rows="3" required></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="design_date">Tanggal Upload</label>
-                    <input type="date" name="design_date" class="form-control" value="${today}" readonly required>
+                    <label for="upload_date">Tanggal Upload</label>
+                    <input type="date" name="upload_date" class="form-control" value="${today}" readonly required>
                 </div>
                 <div class="form-group">
                     <label for="image">Upload Gambar</label>
@@ -137,8 +137,8 @@
                     <input type="text" name="video_title" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label for="video_date">Tanggal Upload</label>
-                    <input type="date" name="video_date" class="form-control" value="${today}" readonly required>
+                    <label for="upload_date">Tanggal Upload</label>
+                    <input type="date" name="upload_date" class="form-control" value="${today}" readonly required>
                 </div>
                 <div class="form-group">
                     <label for="thumbnail">Upload Thumbnail</label>
