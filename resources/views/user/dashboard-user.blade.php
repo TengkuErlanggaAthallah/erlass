@@ -20,7 +20,8 @@
         /* Custom Styles */
         body {
             font-family: "Poppins", sans-serif;
-            background-image: url('/images/background-home.png');
+            background-color: white;
+            overflow: hidden;
             background-size: cover;
             background-position: center;
             margin: 0;
@@ -28,6 +29,68 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+        }
+.wave,
+.wave::before,
+.wave::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200vw; /* Atur lebar gelombang */
+    height: 300vw; /* Atur tinggi gelombang */
+    margin-left: -100vw; /* Sesuaikan margin untuk memposisikan gelombang */
+    transform-origin: 50% 50%;
+    background-color: transparent; /* Anda bisa mengubah ini jika ingin warna latar belakang */
+    border-radius: 38% 42%;
+    box-shadow: inset 0 0 10vw #e394bd; /* Ganti dengan warna pekat (contoh: merah oranye) */
+    animation: spin 16s infinite linear;
+    mix-blend-mode: multiply;
+}
+
+.wave::before {
+    width: 100%;
+    height: 80%;
+    margin-top: -100vw; /* Atur margin untuk memposisikan gelombang atas */
+    transform-origin: 49% 51%;
+    border-radius: 40% 38%;
+    box-shadow: inset 0 0 10vw #78c6eb; /* Ganti dengan warna pekat (contoh: kuning pekat) */
+    animation: spin 13s infinite linear;
+}
+
+.wave::after {
+    width: 100%;
+    height: 85%;
+    margin-top: -100vw; /* Atur margin untuk memposisikan gelombang bawah */
+    transform-origin: 51% 49%;
+    border-radius: 48% 42%;
+    box-shadow: inset 0 0 10vw #e63e25; /* Ganti dengan warna pekat (contoh: biru pekat) */
+    animation: spin 10s infinite linear;
+}
+
+/* Media Queries untuk Gelombang */
+@media (max-width: 768px) {
+    .wave,
+    .wave::before,
+    .wave::after {
+        width: 300vw; /* Lebar gelombang lebih besar untuk layar kecil */
+        height: 400vw; /* Tinggi gelombang lebih besar untuk layar kecil */
+        margin-left: -150vw; /* Sesuaikan margin untuk memposisikan gelombang */
+    }
+}
+
+@media (max-width: 480px) {
+    .wave,
+    .wave::before,
+    .wave::after {
+        width: 400vw; /* Lebar gelombang lebih besar untuk layar ekstra kecil */
+        height: 500vw; /* Tinggi gelombang lebih besar untuk layar ekstra kecil */
+        margin-left: -200vw; /* Sesuaikan margin untuk memposisikan gelombang */
+    }
+}
+
+        @keyframes spin {
+        100% { transform: rotate(360deg); }
         }
 
         /* Animasi untuk elemen yang muncul */
@@ -64,6 +127,7 @@
             height: auto;
             margin-top: 50px;
             animation: slideInDown 0.8s ease-out;
+            color: #63c0f2;
         }
 
         #left-image {
@@ -87,6 +151,13 @@
         .logo-box img {
             height: auto;
             display: block;
+        }
+        .hero_area {
+            flex: 1; /* Membuat hero_area mengisi ruang yang tersisa */
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 10px;
+            position: relative;
         }
 
         .hero_area h1 {
@@ -248,25 +319,42 @@
             }
         }
 
+        footer {
+            background-color: #63c0f2; /* Warna biru transparan */
+            padding: 20px; /* Tambahkan padding untuk ruang di sekitar teks */
+            text-align: center;
+            color: white;
+            animation: fadeIn 0.8s ease-in-out;
+            margin-top: auto; /* Mengatur margin atas footer agar tetap di bawah */
+            display: flex; /* Gunakan flexbox untuk footer */
+            justify-content: center; /* Pusatkan konten */
+            align-items: center; /* Pusatkan konten secara vertikal */
+            flex-direction: column; /* Atur konten menjadi kolom */
+        }
+
         .copyright p {
-            font-size: 24px;
+            font-family: "Candal", sans-serif;
+            font-weight: bold;
+            font-size: 24px; /* Ukuran font default */
+            margin: 0; /* Hapus margin default */
         }
 
         /* Responsive Adjustments */
         @media (max-width: 768px) {
             .copyright p {
-                font-size: 18px;
+                font-size: 18px; /* Ukuran font untuk layar kecil */
             }
         }
 
         @media (max-width: 480px) {
             .copyright p {
-                font-size: 16px;
+                font-size: 16px; /* Ukuran font untuk layar ekstra kecil */
             }
         }
     </style>
 </head>
 <body>
+    <div class="wave"></div>
     <div class="hero_area">
         <div class="logo-box">
             <img id="right-image" src="images/coding.png" alt="Logo kanan" />
@@ -351,9 +439,12 @@
             </div>
         </section>
     </div>
-    <div style="text-align: center; margin-top: 300px; font-family: Candal, sans-serif; font-weight: regular; opacity: 1; color: white; animation: fadeIn 0.8s ease-in-out;" class="copyright">
-        <p> 2024 All Rights Reserved By Erlass Prokreatif Indonesia</p>
-    </div>
+
+    <footer>
+        <div class="copyright">
+            <p> 2024 All Rights Reserved By Erlass Prokreatif Indonesia</p>
+        </div>
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
